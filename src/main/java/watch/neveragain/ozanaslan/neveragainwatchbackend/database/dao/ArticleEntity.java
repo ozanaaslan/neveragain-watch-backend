@@ -1,9 +1,6 @@
 package watch.neveragain.ozanaslan.neveragainwatchbackend.database.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
@@ -18,15 +15,25 @@ public class ArticleEntity extends AbstractEntity{
     @Getter @Setter private String title;
     @Getter @Setter private String description;
     @Getter @Setter private String evaluation;
+    @Getter @Setter private String tags;
 
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String content;
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String base64avatar;
 
+    @Getter @Setter private boolean published;
+    @Getter @Setter private boolean archived;
+    @Getter @Setter private boolean editable;
+    @Getter @Setter private boolean reviewed;
+
     @Getter private long creationTimestamp;
     @Getter @Setter private long lastEditedTimestamp;
+    @Getter @Setter private long publishedTimestamp;
 
-    @ManyToMany
-    @Getter private List<UserEntity> editors;
+    @Getter @Setter private int views;
+    @Getter @Setter private int upVotes;
+    @Getter @Setter private int downVotes;
+
+    @ManyToMany @Getter private List<UserEntity> editors;
 
     public ArticleEntity(){}
 

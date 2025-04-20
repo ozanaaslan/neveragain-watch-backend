@@ -25,8 +25,8 @@ public class UserEntity extends AbstractEntity {
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String description;
 
     @Getter @Setter private String position;
-    @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String permissions;
-    @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String roles;
+    @Setter @Getter @Column(columnDefinition = "LONGTEXT") private String permissions;
+    @Setter @Getter @Column(columnDefinition = "LONGTEXT") private String roles;
 
     @Getter @Setter private long lastLoginTimestamp;
     @Getter private long creationTimestamp;
@@ -34,8 +34,7 @@ public class UserEntity extends AbstractEntity {
     @Getter @Setter private boolean enabled;
     @Getter @Setter private boolean locked;
 
-    @ManyToMany
-    @Getter private List<ArticleEntity> articles;
+    @ManyToMany @Getter private List<ArticleEntity> articles;
 
     public UserEntity() {}
 
@@ -50,6 +49,32 @@ public class UserEntity extends AbstractEntity {
         this.lastLoginTimestamp = 0L;
         this.enabled = enabled;
 
+    }
+
+    /**
+     * Returns a list of permissions.
+     * <p>
+     * This method splits the permissions string using the delimiter ";" and
+     * returns a list of individual permissions as strings. If the permissions
+     * string is empty, it returns an empty list.
+     *
+     * @return a list of permissions
+     */
+    public List<String> getPermissionsList() {
+        if (this.permissions.length() > 0)
+            return Arrays.asList(this.permissions.split(";"));
+        return new ArrayList<>();
+    }
+
+    /**
+     * Returns a list of roles for this user.
+     *
+     * @return A list of roles as strings.
+     */
+    public List<String> getRolesList() {
+        if (this.roles.length() > 0)
+            return Arrays.asList(this.roles.split(";"));
+        return new ArrayList<>();
     }
 
 
